@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Razorline — Informativa sulla Privacy / Privacy Policy</title>
+<meta name="description" content="Razorline non raccoglie dati personali. Informativa sulla privacy (IT/EN)." />
+<link rel="icon" href="icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#05070f; --bg2:#0d182c; --panel:#0e1726;
+    --accent:#1c5dff; --accent2:#6b9aff; --red:#ff3658;
+    --silver:#e6eef7; --text:#f2f7fc; --muted:#9fb0c5; --line:rgba(230,238,247,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);
+    background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:-20%;z-index:-2;
+    background:radial-gradient(55% 45% at 30% 20%, rgba(28,93,255,.16), transparent 70%),
+      linear-gradient(160deg,#06080f,#0b1424 55%,#0d182c)}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent2)}
+  nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(10px);
+    background:rgba(5,7,15,.6);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1120px}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+  .brand img{width:34px;height:34px;border-radius:9px}
+  .brand b{font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:3px;font-size:20px}
+  nav .back{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500}
+  nav .back:hover{color:var(--text)}
+  header{padding:56px 0 8px;text-align:center}
+  header h1{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:44px;letter-spacing:.5px}
+  header .meta{color:var(--muted);font-size:14px;margin-top:10px}
+  .summary{background:linear-gradient(160deg,rgba(28,93,255,.08),rgba(255,255,255,.01));
+    border:1px solid rgba(28,93,255,.25);border-radius:16px;padding:22px 24px;margin:28px 0;
+    color:var(--text);font-size:16px}
+  main{padding:8px 0 40px}
+  h2{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:24px;margin:34px 0 6px;
+    color:var(--accent2);scroll-margin-top:80px}
+  .lang{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:3px;
+    text-transform:uppercase;color:var(--muted);border-top:1px solid var(--line);
+    padding-top:30px;margin-top:46px}
+  h3{font-size:17px;margin:22px 0 4px}
+  p{color:#cdd8e8;margin:6px 0}
+  ul{margin:8px 0 8px 4px;list-style:none}
+  li{color:#cdd8e8;margin:10px 0;padding-left:22px;position:relative}
+  li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 8px rgba(28,93,255,.6)}
+  li b{color:var(--text)}
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--muted);font-size:13px}
+  footer a{margin:0 8px}
+  @media(max-width:560px){header h1{font-size:34px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="icon.png" alt="Razorline" /><b>RAZORLINE</b></a>
+    <a class="back" href="index.html">← Home</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <h1>Informativa sulla Privacy</h1>
+    <div class="meta">Razorline · Ultimo aggiornamento: 24/06/2026 · Sviluppatore: Federico Gusmeroli</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="summary"><b>In sintesi:</b> Razorline non raccoglie dati personali, non li vende e non li condivide. Nessun account, nessuna pubblicità, nessun tracciamento. Tutto ciò che crei resta sul tuo dispositivo.</div>
+
+  <!-- ITALIANO -->
+  <h2 id="it">Italiano</h2>
+
+  <h3>1. Quali dati trattiamo</h3>
+  <p>Razorline funziona in locale. I dati che generi — sessioni e tempi sul giro, traiettorie GPS, tracciati e percorsi, veicoli, record e impostazioni — vengono salvati esclusivamente sulla memoria del tuo dispositivo. Non vengono inviati a noi né a server di nostra proprietà (non abbiamo server). Non chiediamo nome, email, numero di telefono o altri dati identificativi.</p>
+
+  <h3>2. Permessi e perché servono</h3>
+  <ul>
+    <li><b>Posizione (GPS), anche in background:</b> serve per cronometrare i giri, registrare la traiettoria e mostrare la mappa. L'uso in background permette di continuare a cronometrare una sessione anche a schermo spento. La posizione è elaborata sul dispositivo e non viene trasmessa a noi.</li>
+    <li><b>Bluetooth:</b> serve solo per collegarsi all'adattatore OBD-II (ELM327) e leggere la telemetria del veicolo (velocità, giri, temperature, ecc.). I dati restano in locale.</li>
+    <li><b>Sensori di movimento:</b> servono per mostrare le forze G durante la guida. Restano sul dispositivo.</li>
+    <li><b>Accesso alle notifiche (solo Android, facoltativo):</b> se lo concedi, serve unicamente a leggere i metadati della sessione musicale attiva (titolo/artista) e mostrarti i controlli del player. Non leggiamo, salviamo o trasmettiamo il contenuto delle tue notifiche. Revocabile in qualsiasi momento dalle impostazioni di sistema.</li>
+    <li><b>Notifiche:</b> per mostrarti avvisi dell'app (es. servizio attivo durante una sessione).</li>
+    <li><b>Internet:</b> usato solo per scaricare le mappe (OpenStreetMap) e calcolare i percorsi.</li>
+  </ul>
+
+  <h3>3. Servizi di terze parti</h3>
+  <p>Per mostrare le mappe e calcolare i percorsi, l'app richiede i dati a fornitori esterni di mappe/routing (es. OpenStreetMap). Tali server ricevono richieste standard di rete (come l'indirizzo IP del dispositivo e le coordinate dell'area mostrata). Noi non riceviamo né conserviamo questi dati. Vedi: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy">Privacy di OpenStreetMap</a>.</p>
+
+  <h3>4. Condivisione e vendita dei dati</h3>
+  <p>Non condividiamo e non vendiamo alcun dato. Se decidi tu di esportare o condividere un file (GPX, CSV o una "sfida"), quell'azione è avviata volontariamente da te tramite il menu di condivisione del dispositivo.</p>
+
+  <h3>5. Conservazione e cancellazione</h3>
+  <p>I dati restano sul tuo dispositivo finché non li elimini dall'app o disinstalli Razorline. Disinstallando l'app, i dati locali vengono rimossi.</p>
+
+  <h3>6. Minori</h3>
+  <p>L'app non è destinata ai minori di 13 anni e non raccoglie consapevolmente i loro dati.</p>
+
+  <h3>7. Uso sicuro</h3>
+  <p>Razorline è pensata per circuito chiuso, track day o aree private. Non usarla su strade aperte al traffico e non interagire col telefono durante la guida.</p>
+
+  <h3>8. Modifiche</h3>
+  <p>Potremmo aggiornare questa informativa. La data in alto indica l'ultima versione.</p>
+
+  <h3>9. Contatti</h3>
+  <p>Per domande sulla privacy: <a href="mailto:support.razorline@gmail.com">support.razorline@gmail.com</a></p>
+
+  <!-- ENGLISH -->
+  <div class="lang">English</div>
+  <h2 id="en">English</h2>
+
+  <h3>1. What data we process</h3>
+  <p>Razorline works locally. The data you generate — sessions and lap times, GPS traces, tracks and routes, vehicles, records and settings — is stored exclusively on your device. It is not sent to us or to any server we own (we have no servers). We do not ask for your name, email, phone number or any identifying data.</p>
+
+  <h3>2. Permissions and why they are needed</h3>
+  <ul>
+    <li><b>Location (GPS), including in the background:</b> used to time your laps, record your trajectory and show the map. Background use lets a session keep timing even when the screen is off. Location is processed on the device and is not transmitted to us.</li>
+    <li><b>Bluetooth:</b> used only to connect to the OBD-II adapter (ELM327) and read vehicle telemetry (speed, RPM, temperatures, etc.). Data stays local.</li>
+    <li><b>Motion sensors:</b> used to display G-forces while driving. They stay on the device.</li>
+    <li><b>Notification access (Android only, optional):</b> if granted, it is used solely to read the active media session metadata (title/artist) and show you the player controls. We do not read, store or transmit the content of your notifications. Revocable at any time in your system settings.</li>
+    <li><b>Notifications:</b> to show app alerts (e.g. the active service during a session).</li>
+    <li><b>Internet:</b> used only to download maps (OpenStreetMap) and calculate routes.</li>
+  </ul>
+
+  <h3>3. Third-party services</h3>
+  <p>To display maps and calculate routes, the app requests data from external map/routing providers (e.g. OpenStreetMap). Those servers receive standard network requests (such as the device's IP address and the coordinates of the displayed area). We do not receive or retain this data. See: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy">OpenStreetMap Privacy Policy</a>.</p>
+
+  <h3>4. Data sharing and selling</h3>
+  <p>We do not share or sell any data. If you choose to export or share a file (GPX, CSV or a "challenge"), that action is started voluntarily by you through your device's share menu.</p>
+
+  <h3>5. Retention and deletion</h3>
+  <p>Your data stays on your device until you delete it in the app or uninstall Razorline. Uninstalling the app removes the local data.</p>
+
+  <h3>6. Children</h3>
+  <p>The app is not intended for children under 13 and does not knowingly collect their data.</p>
+
+  <h3>7. Safe use</h3>
+  <p>Razorline is intended for closed circuits, track days or private areas. Do not use it on public roads and do not interact with the phone while driving.</p>
+
+  <h3>8. Changes</h3>
+  <p>We may update this policy. The date at the top shows the latest version.</p>
+
+  <h3>9. Contact</h3>
+  <p>For privacy questions: <a href="mailto:support.razorline@gmail.com">support.razorline@gmail.com</a></p>
+</main>
+
+<footer>
+  <div class="wrap">
+    © 2026 Federico Gusmeroli · Razorline<br/>
+    <a href="index.html">Home</a> · <a href="mailto:support.razorline@gmail.com">support.razorline@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>

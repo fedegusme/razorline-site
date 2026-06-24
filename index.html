@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Razorline — GPS Lap Timer & Telemetria OBD</title>
+<meta name="description" content="Razorline: cronometraggio giri stile F1, telemetria OBD-II e mappe in un'unica HUD. Spingiti al limite." />
+<link rel="icon" href="icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#05070f; --bg2:#0d182c; --panel:#0e1726;
+    --accent:#1c5dff; --accent2:#6b9aff; --red:#ff3658;
+    --silver:#e6eef7; --text:#f2f7fc; --muted:#9fb0c5;
+    --line:rgba(230,238,247,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--text); background:var(--bg); line-height:1.6;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  /* sfondo: gradiente + griglia in sbieco + bagliore blu */
+  body::before{
+    content:""; position:fixed; inset:-20% -20% -20% -20%; z-index:-2;
+    background:
+      radial-gradient(60% 50% at 30% 35%, rgba(28,93,255,.18), transparent 70%),
+      linear-gradient(160deg,#06080f 0%, #0b1424 55%, #0d182c 100%);
+  }
+  body::after{
+    content:""; position:fixed; inset:-40%; z-index:-1; opacity:.5;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    transform:rotate(-4deg);
+    -webkit-mask-image:radial-gradient(80% 70% at 50% 30%, #000 40%, transparent 85%);
+            mask-image:radial-gradient(80% 70% at 50% 30%, #000 40%, transparent 85%);
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+  .mono{font-variant-numeric:tabular-nums}
+  .accent{color:var(--accent2)}
+  .red{color:var(--red)}
+
+  /* NAV */
+  nav{position:sticky; top:0; z-index:10; backdrop-filter:blur(10px);
+    background:rgba(5,7,15,.6); border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px}
+  .brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text)}
+  .brand img{width:34px; height:34px; border-radius:9px}
+  .brand b{font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:3px; font-size:20px}
+  nav a.link{color:var(--muted); text-decoration:none; font-size:14px; margin-left:22px; font-weight:500}
+  nav a.link:hover{color:var(--text)}
+  .nav-links{display:flex; align-items:center}
+
+  /* HERO */
+  header{padding:72px 0 40px}
+  .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center}
+  .eyebrow{display:inline-block; font-size:12px; letter-spacing:2.5px; font-weight:700;
+    color:var(--accent2); border:1px solid rgba(28,93,255,.4); background:rgba(28,93,255,.12);
+    padding:6px 12px; border-radius:6px; margin-bottom:22px}
+  h1{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:64px; line-height:1.02;
+    letter-spacing:1px; margin-bottom:18px}
+  h1 .stroke{color:transparent; -webkit-text-stroke:1.5px var(--accent2)}
+  .lead{font-size:19px; color:var(--muted); max-width:520px; margin-bottom:28px}
+  .cta{display:flex; gap:14px; flex-wrap:wrap}
+  .btn{display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-weight:600;
+    padding:13px 22px; border-radius:10px; font-size:15px; transition:.2s}
+  .btn-primary{background:var(--accent); color:#fff; box-shadow:0 8px 30px rgba(28,93,255,.35)}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 36px rgba(28,93,255,.5)}
+  .btn-ghost{border:1px solid var(--line); color:var(--text)}
+  .btn-ghost:hover{border-color:var(--accent2); color:var(--accent2)}
+  .soon{font-size:12px; color:var(--muted); margin-top:14px; letter-spacing:.5px}
+
+  /* PHONE MOCKUP (ricrea lo splash) */
+  .phone{justify-self:center; width:280px; height:560px; border-radius:38px; padding:12px;
+    background:linear-gradient(160deg,#11161f,#05070d); border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(28,93,255,.08); position:relative}
+  .phone svg{width:100%; height:100%; border-radius:28px; display:block}
+  .notch{position:absolute; top:20px; left:50%; transform:translateX(-50%); width:90px; height:7px;
+    background:#000; border-radius:5px; opacity:.7}
+
+  /* SECTIONS */
+  section{padding:64px 0}
+  .sec-head{text-align:center; max-width:680px; margin:0 auto 44px}
+  .sec-head h2{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:40px; letter-spacing:.5px}
+  .sec-head p{color:var(--muted); font-size:17px; margin-top:10px}
+  .tag{font-size:12px; letter-spacing:2.5px; font-weight:700; color:var(--accent2); text-transform:uppercase}
+
+  /* FEATURES */
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+    border:1px solid var(--line); border-radius:16px; padding:24px; transition:.2s}
+  .card:hover{border-color:rgba(28,93,255,.45); transform:translateY(-3px)}
+  .ic{width:44px; height:44px; border-radius:11px; display:grid; place-items:center; font-size:22px;
+    background:rgba(28,93,255,.14); border:1px solid rgba(28,93,255,.3); margin-bottom:14px}
+  .card h3{font-size:18px; margin-bottom:6px; font-weight:700}
+  .card p{color:var(--muted); font-size:14.5px}
+
+  /* MODES */
+  .modes{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  .mode{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:26px; text-align:center}
+  .mode .big{font-family:'Rajdhani',sans-serif; font-size:30px; font-weight:700; margin-bottom:6px}
+  .mode p{color:var(--muted); font-size:14.5px}
+  .mode .pill{display:inline-block; font-size:11px; letter-spacing:1.5px; font-weight:700; padding:4px 10px;
+    border-radius:999px; margin-bottom:14px}
+  .pill.b{background:rgba(28,93,255,.15); color:var(--accent2)}
+  .pill.r{background:rgba(255,54,88,.15); color:var(--red)}
+
+  /* PRIVACY */
+  .privacy{background:linear-gradient(160deg, rgba(28,93,255,.08), rgba(255,255,255,.01));
+    border:1px solid rgba(28,93,255,.25); border-radius:22px; padding:48px; text-align:center}
+  .privacy h2{font-family:'Rajdhani',sans-serif; font-size:36px; font-weight:700}
+  .privacy p{color:var(--muted); max-width:640px; margin:14px auto 0; font-size:16px}
+  .chips{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:24px}
+  .chip{font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px;
+    border:1px solid var(--line); color:var(--text); background:rgba(255,255,255,.02)}
+  .chip::before{content:"✓ "; color:var(--accent2); font-weight:800}
+
+  /* DISCLAIMER */
+  .disc{margin-top:48px; border:1px solid rgba(255,54,88,.3); background:rgba(255,54,88,.07);
+    border-radius:14px; padding:18px 22px; color:#ffc9d3; font-size:14px; text-align:center}
+
+  footer{border-top:1px solid var(--line); padding:40px 0; margin-top:40px}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px}
+  footer .brand b{font-size:18px}
+  footer a{color:var(--muted); text-decoration:none; font-size:14px; margin-left:20px}
+  footer a:hover{color:var(--text)}
+  .copy{color:var(--muted); font-size:13px}
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr; text-align:center}
+    .lead{margin-left:auto; margin-right:auto}
+    .cta{justify-content:center}
+    h1{font-size:48px}
+    .grid,.modes{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+  }
+  @media(max-width:560px){
+    .grid,.modes{grid-template-columns:1fr}
+    h1{font-size:40px}
+    section{padding:48px 0}
+    .privacy{padding:32px 22px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="icon.png" alt="Razorline" /><b>RAZORLINE</b></a>
+    <div class="nav-links">
+      <a class="link" href="#features">Funzioni</a>
+      <a class="link" href="#modes">Avvio</a>
+      <a class="link" href="#privacy">Privacy</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">GPS LAP TIMER · TELEMETRIA · OBD</span>
+      <h1>Spingiti al <span class="stroke">limite</span>.</h1>
+      <p class="lead">Cronometraggio giri in stile Formula 1, telemetria OBD-II e mappe — tutto in un'unica HUD pensata per la pista. Ogni decimo conta.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#features">Scopri le funzioni →</a>
+        <a class="btn btn-ghost" href="#privacy">Privacy</a>
+      </div>
+      <div class="soon">In arrivo su iOS &amp; Android</div>
+    </div>
+
+    <div class="phone">
+      <div class="notch"></div>
+      <!-- Ricostruzione dello splash: linea di gara + nodo + traguardo -->
+      <svg viewBox="0 0 280 560" xmlns="http://www.w3.org/2000/svg" aria-label="Anteprima app">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#070b15"/>
+            <stop offset="1" stop-color="#0d182c"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="35%" cy="62%" r="55%">
+            <stop offset="0" stop-color="#1c5dff" stop-opacity=".35"/>
+            <stop offset="1" stop-color="#1c5dff" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="soft"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <rect width="280" height="560" fill="url(#bg)"/>
+        <g stroke="#e6eef7" stroke-opacity=".06" stroke-width="1">
+          <g transform="rotate(-5 140 280)">
+            <line x1="-40" y1="80"  x2="320" y2="80"/>
+            <line x1="-40" y1="180" x2="320" y2="180"/>
+            <line x1="-40" y1="280" x2="320" y2="280"/>
+            <line x1="-40" y1="380" x2="320" y2="380"/>
+            <line x1="-40" y1="480" x2="320" y2="480"/>
+            <line x1="40"  y1="-40" x2="40"  y2="600"/>
+            <line x1="120" y1="-40" x2="120" y2="600"/>
+            <line x1="200" y1="-40" x2="200" y2="600"/>
+          </g>
+        </g>
+        <rect width="280" height="560" fill="url(#glow)"/>
+
+        <!-- badge top -->
+        <rect x="22" y="34" width="120" height="22" rx="4" fill="#1c5dff" fill-opacity=".14" stroke="#1c5dff" stroke-opacity=".45"/>
+        <text x="33" y="49" fill="#cdd8e8" font-family="Inter,sans-serif" font-size="9" letter-spacing="2">GPS LAP TIMER</text>
+
+        <!-- linea base (grigia) -->
+        <path d="M40,470 C60,360 120,470 150,360 C175,300 205,330 250,200"
+              fill="none" stroke="#7c8695" stroke-width="9" stroke-linecap="round"/>
+        <!-- segmento attivo (blu) -->
+        <path d="M40,470 C60,360 120,470 150,360"
+              fill="none" stroke="#1c5dff" stroke-width="10" stroke-linecap="round" filter="url(#soft)" opacity=".7"/>
+        <path d="M40,470 C60,360 120,470 150,360"
+              fill="none" stroke="#3f73ff" stroke-width="9" stroke-linecap="round"/>
+
+        <!-- traguardo (gate) -->
+        <g transform="rotate(28 205 300)">
+          <rect x="183" y="294" width="44" height="9" rx="4.5" fill="#1c5dff" fill-opacity=".5" filter="url(#soft)"/>
+          <rect x="185" y="295" width="40" height="7" rx="3.5" fill="#ecf2f9"/>
+        </g>
+
+        <!-- nodo pulsante -->
+        <circle cx="150" cy="360" r="20" fill="#1c5dff" fill-opacity=".22"/>
+        <circle cx="150" cy="360" r="9" fill="#fff"/>
+        <circle cx="150" cy="360" r="4" fill="#1c5dff"/>
+
+        <!-- chip cronometro -->
+        <rect x="150" y="430" width="106" height="40" rx="8" fill="#0e1726" fill-opacity=".85" stroke="#1c5dff" stroke-opacity=".35"/>
+        <text x="166" y="457" fill="#f2f7fc" font-family="Inter,sans-serif" font-weight="800" font-size="22">00:03.34</text>
+
+        <!-- wordmark -->
+        <text x="22" y="512" fill="#f2f7fc" font-family="Rajdhani,sans-serif" font-weight="700" font-size="30" letter-spacing="5">RAZORLINE</text>
+        <text x="23" y="532" fill="#9fb0c5" font-family="Inter,sans-serif" font-size="9" letter-spacing="3">TELEMETRIA · SETTORI · GPS</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">Cosa fa</div>
+      <h2>Tutto quello che serve in pista</h2>
+      <p>Un'app sola per cronometrare, leggere il motore e seguire la traiettoria.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="ic">⏱️</div><h3>Cronometraggio stile F1</h3><p>Settori <span class="accent">viola</span>/verde/giallo, giro teorico, delta live e fantasma del giro più veloce — il record è separato per ogni auto.</p></div>
+      <div class="card"><div class="ic">📡</div><h3>Telemetria OBD-II</h3><p>Collega un adattatore ELM327 via Bluetooth e leggi velocità, giri motore, temperature, gas e codici errore (DTC).</p></div>
+      <div class="card"><div class="ic">🗺️</div><h3>Mappe &amp; percorsi</h3><p>Disegna o importa percorsi (GPX / Google Maps), calcola il routing e segui la minimappa heading-up con la tua traiettoria.</p></div>
+      <div class="card"><div class="ic">📊</div><h3>HUD personalizzabile</h3><p>Componi la dashboard come vuoi: velocità, giri (digitali o a lancette), tempi, temperature, forza G, minimappa.</p></div>
+      <div class="card"><div class="ic">🌀</div><h3>Forze G</h3><p>Visualizza le accelerazioni laterali e longitudinali in tempo reale grazie ai sensori del telefono.</p></div>
+      <div class="card"><div class="ic">🚨</div><h3>Velox personali</h3><p>Segna i tuoi punti di rilevamento velocità e tieni i record di passaggio, divisi per veicolo.</p></div>
+      <div class="card"><div class="ic">🏎️</div><h3>Confronto auto</h3><p>Metti a confronto i migliori tempi e settori tra i tuoi veicoli sullo stesso tracciato.</p></div>
+      <div class="card"><div class="ic">🎵</div><h3>Controllo musica</h3><p>Play/pausa e traccia successiva del player di sistema, direttamente dalla HUD, senza uscire dall'app.</p></div>
+      <div class="card"><div class="ic">🔒</div><h3>Privacy totale</h3><p>Nessun account, nessun tracciamento, nessuna pubblicità. I tuoi dati restano sul telefono.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="modes">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">Avvio del giro</div>
+      <h2>Parti come vuoi</h2>
+      <p>Tre modalità per far partire il cronometro nel modo giusto per te.</p>
+    </div>
+    <div class="modes">
+      <div class="mode"><span class="pill b">MANUALE</span><div class="big">Subito</div><p>Premi Avvia e il tempo parte all'istante. Il giro si chiude quando ripassi sul traguardo.</p></div>
+      <div class="mode"><span class="pill r">SEMAFORO</span><div class="big">Al verde</div><p>Stile griglia di partenza: il cronometro scatta esattamente quando i semafori si spengono.</p></div>
+      <div class="mode"><span class="pill b">AUTOMATICA</span><div class="big">Al traguardo</div><p>Si arma da sola vicino alla linea: il tempo parte nel momento in cui attraversi lo start.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="wrap">
+    <div class="privacy">
+      <div class="tag">Privacy</div>
+      <h2>I tuoi dati restano tuoi</h2>
+      <p>Razorline non raccoglie, non vende e non condivide dati personali. Posizione, Bluetooth e sensori servono solo a far funzionare l'app sul tuo dispositivo: i giri, le sessioni e i record sono salvati esclusivamente in locale.</p>
+      <div class="chips">
+        <span class="chip">Nessun account</span>
+        <span class="chip">Nessun tracciamento</span>
+        <span class="chip">Nessuna pubblicità</span>
+        <span class="chip">Dati solo sul tuo telefono</span>
+      </div>
+      <div style="margin-top:26px"><a class="btn btn-ghost" href="privacy.html">Leggi l'informativa completa →</a></div>
+    </div>
+
+    <div class="disc">⚠️ Razorline è pensata SOLO per circuito chiuso, track day o aree private. Non usarla su strade aperte al traffico e non interagire col telefono durante la guida.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="icon.png" alt="Razorline" /><b>RAZORLINE</b></a>
+    <div>
+      <a href="#features">Funzioni</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="mailto:support.razorline@gmail.com">Contatti</a>
+    </div>
+  </div>
+  <div class="wrap copy" style="margin-top:18px">© 2026 Federico Gusmeroli · Razorline — GPS lap timer &amp; telemetria OBD.</div>
+</footer>
+
+</body>
+</html>
