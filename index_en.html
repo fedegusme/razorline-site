@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Razorline — GPS Lap Timer & OBD Telemetry</title>
-<meta name="description" content="Razorline: cronometraggio giri stile F1, telemetria OBD-II e mappe in un'unica HUD. Spingiti al limite." />
+<meta name="description" content="Razorline: F1-style lap timing, OBD-II telemetry and maps in a single HUD. Push to the limit." />
 <link rel="icon" href="icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -156,6 +156,7 @@
       <a class="link" href="#features">Features</a>
       <a class="link" href="#modes">Start</a>
       <a class="link" href="#premium">Premium</a>
+      <a class="link" href="#permissions">Permissions</a>
       <a class="link" href="#privacy">Privacy</a>
       <a class="link" href="index.html" style="margin-left:32px">IT</a>
       <a class="link" href="index_en.html" style="margin-left:12px; color:var(--text); border-bottom:2px solid var(--accent2)">EN</a>
@@ -250,15 +251,18 @@
       <p>One app to time, read the engine and follow the line.</p>
     </div>
     <div class="grid">
-      <div class="card"><div class="ic">⏱️</div><h3>F1-style timing</h3><p>Purple/green/yellow sectors, theoretical lap, live delta and ghost of the best lap — records are separated per car.</p></div>
-      <div class="card"><div class="ic">📡</div><h3>OBD-II Telemetry</h3><p>Connect an ELM327 adapter via Bluetooth and read speed, RPM, temperatures, throttle and error codes (DTC).</p></div>
-      <div class="card"><div class="ic">🗺️</div><h3>Maps &amp; routes</h3><p>Draw or import routes (GPX / Maps), calculate routing and follow the heading-up minimap with your trajectory.</p></div>
-      <div class="card"><div class="ic">📊</div><h3>Custom HUD</h3><p>Build your dashboard: speed, revs (digital or gauge), times, temps, G-force, minimap.</p></div>
-      <div class="card"><div class="ic">🌀</div><h3>G-Forces</h3><p>View lateral and longitudinal accelerations in real time thanks to the phone's sensors.</p></div>
-      <div class="card"><div class="ic">🚨</div><h3>Personal speed traps</h3><p>Mark your speed detection points and keep passing records, separated by vehicle.</p></div>
-      <div class="card"><div class="ic">🏎️</div><h3>Car Comparison</h3><p>Compare the best times and sectors between your vehicles on the same track.</p></div>
-      <div class="card"><div class="ic">🎵</div><h3>Music Control</h3><p>Play/pause and next track of the system player, directly from the HUD, without leaving the app.</p></div>
-      <div class="card"><div class="ic">🔒</div><h3>Total Privacy</h3><p>No accounts, no tracking, no ads. Your data stays on your phone.</p></div>
+      <div class="card"><div class="ic">⏱️</div><h3>F1-style timing</h3><p>Purple/green/yellow sectors with history+ghost benchmark, theoretical lap and live delta. Finish line and splits on the map.</p></div>
+      <div class="card"><div class="ic">📡</div><h3>OBD-II Telemetry</h3><p>Connect an ELM327 adapter via Wi-Fi, classic Bluetooth or BLE. RPM, speed, throttle, temperatures, error codes (DTC).</p></div>
+      <div class="card"><div class="ic">🗺️</div><h3>Maps &amp; routes</h3><p>Standard, satellite or terrain maps. Draw routes, record driving (Tour) or import GPX and Google Maps links.</p></div>
+      <div class="card"><div class="ic">📊</div><h3>Custom HUD</h3><p>Configurable grid dashboard: speed, revs, times, temps, G-force, minimap. Auto-merge adjacent cells.</p></div>
+      <div class="card"><div class="ic">🏁</div><h3>Live Dashboard</h3><p>Lap, delta, F1 sectors, rotating minimap, rally corner indicator, G-forces and music — all at a glance.</p></div>
+      <div class="card"><div class="ic">🌀</div><h3>G-Forces</h3><p>Real-time lateral and longitudinal accelerations from the phone's sensors, visible in HUD.</p></div>
+      <div class="card"><div class="ic">🚨</div><h3>Personal speed traps</h3><p>Place your targets on the map. Always-on GPS monitoring and separate records per car.</p></div>
+      <div class="card"><div class="ic">🏎️</div><h3>Vehicles &amp; comparison</h3><p>Built-in make and model catalog. Compare the best times and sectors between your cars on the same track.</p></div>
+      <div class="card"><div class="ic">🎵</div><h3>Music control</h3><p>Play, pause and next track of any system player, directly from the HUD without leaving the app.</p></div>
+      <div class="card"><div class="ic">📸</div><h3>Social highlights</h3><p>Create vertical stories with your photos or videos, sector times and F1 colors to share on social media.</p></div>
+      <div class="card"><div class="ic">📂</div><h3>History &amp; analysis</h3><p>Saved sessions, lap-time and speed-trace graphs, sector list. Export CSV, GPX (Premium: VBO/NMEA).</p></div>
+      <div class="card"><div class="ic">🔒</div><h3>Total Privacy</h3><p>No accounts, no tracking, no ads. Your data stays on your phone. No servers of ours.</p></div>
     </div>
   </div>
 </section>
@@ -286,9 +290,30 @@
       <p>The app is forever free for timing and basic features. Upgrade to Premium to unlock all advanced tools.</p>
     </div>
     <div class="modes">
-      <div class="mode"><span class="pill b">FREE</span><div class="big">Basic</div><p>Timing, read-only HUD, maps, history, vehicles and basic OBD diagnostics.</p></div>
-      <div class="mode"><span class="pill r">PREMIUM</span><div class="big">Monthly</div><p>Custom HUD, dynamic ghosts, advanced Tours, extended OBD-II HUD and car comparisons.</p></div>
-      <div class="mode"><span class="pill b">IN-APP</span><div class="big">Secure</div><p>The subscription is securely activated and renewed only through your Apple App Store or Google Play Store.</p></div>
+      <div class="mode"><span class="pill b">FREE</span><div class="big">Forever</div><p>F1 timing, live HUD, GPS &amp; maps, up to 2 routes and 1 vehicle, basic history, OBD &amp; diagnostics, social highlights.</p></div>
+      <div class="mode"><span class="pill r">PREMIUM</span><div class="big">Monthly</div><p>Full HUD editor, ghosts &amp; challenges, replay &amp; analysis, car comparison, VBO/NMEA export, unlimited routes &amp; vehicles, advanced OBD.</p></div>
+      <div class="mode"><span class="pill b">IN-APP</span><div class="big">Secure</div><p>Payment is handled securely only through your Apple App Store or Google Play Store. No payment data passes through the app.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="permissions">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag">Transparency</div>
+      <h2>Transparent permissions</h2>
+      <p>Every permission has one purpose: making the app work locally. Here's exactly what's needed and why.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="ic">📍</div><h3>GPS Location</h3><p>To time laps, record your trajectory and show the map. Background use lets a session keep timing even when the screen is off.</p></div>
+      <div class="card"><div class="ic">📶</div><h3>Bluetooth</h3><p>To connect to the OBD-II adapter (ELM327) via classic Bluetooth or BLE to read telemetry.</p></div>
+      <div class="card"><div class="ic">🌐</div><h3>Internet</h3><p>Exclusively to download map tiles (OpenStreetMap/Esri). No personal data is sent to our servers.</p></div>
+      <div class="card"><div class="ic">📳</div><h3>Motion sensors</h3><p>To measure and display G-forces in real time. Data stays on-device.</p></div>
+      <div class="card"><div class="ic">🔔</div><h3>Notifications</h3><p>For app alerts, such as showing that the service is active during a background session.</p></div>
+      <div class="card"><div class="ic">🎧</div><h3>Notification access</h3><p>(Android only, optional) To read the active track title and show you controls. We do not read message contents.</p></div>
+      <div class="card"><div class="ic">📸</div><h3>Camera &amp; photos</h3><p>To record a video or pick a photo to use as a background for a highlight to share. Files are not transmitted to us.</p></div>
+      <div class="card"><div class="ic">📡</div><h3>Local Network</h3><p>(iOS only) To connect to Wi-Fi OBD-II adapters on the local network.</p></div>
+      <div class="card"><div class="ic">🎵</div><h3>Apple Music</h3><p>(iOS only) To show the current track and control music playback while driving.</p></div>
     </div>
   </div>
 </section>
@@ -304,6 +329,8 @@
         <span class="chip">No tracking</span>
         <span class="chip">No ads</span>
         <span class="chip">Data only on your phone</span>
+        <span class="chip">No servers of ours</span>
+        <span class="chip">Camera only for stories</span>
       </div>
       <div style="margin-top:26px"><a class="btn btn-ghost" href="privacy.html">Read the full policy →</a></div>
     </div>

@@ -68,7 +68,7 @@
 <header>
   <div class="wrap">
     <h1>Informativa sulla Privacy</h1>
-    <div class="meta">Razorline · Ultimo aggiornamento: 24/06/2026 · Sviluppatore: Federico Gusmeroli</div>
+    <div class="meta">Razorline · Ultimo aggiornamento: 14/07/2026 · Sviluppatore: Federico Gusmeroli</div>
   </div>
 </header>
 
@@ -84,20 +84,22 @@
   <h3>2. Permessi e perché servono</h3>
   <ul>
     <li><b>Posizione (GPS), anche in background:</b> serve per cronometrare i giri, registrare la traiettoria e mostrare la mappa. L'uso in background permette di continuare a cronometrare una sessione anche a schermo spento. La posizione è elaborata sul dispositivo e non viene trasmessa a noi.</li>
-    <li><b>Bluetooth:</b> serve solo per collegarsi all'adattatore OBD-II (ELM327) e leggere la telemetria del veicolo (velocità, giri, temperature, ecc.). I dati restano in locale.</li>
+    <li><b>Bluetooth:</b> serve solo per collegarsi all'adattatore OBD-II (ELM327) via Bluetooth classico o BLE e leggere la telemetria del veicolo.</li>
     <li><b>Sensori di movimento:</b> servono per mostrare le forze G durante la guida. Restano sul dispositivo.</li>
-    <li><b>Accesso alle notifiche (solo Android, facoltativo):</b> se lo concedi, serve unicamente a leggere i metadati della sessione musicale attiva (titolo/artista) e mostrarti i controlli del player. Non leggiamo, salviamo o trasmettiamo il contenuto delle tue notifiche. Revocabile in qualsiasi momento dalle impostazioni di sistema.</li>
+    <li><b>Accesso alle notifiche (solo Android, facoltativo):</b> serve unicamente a leggere i metadati della sessione musicale attiva (titolo/artista) e mostrarti i controlli del player. Non leggiamo o trasmettiamo il contenuto delle tue notifiche.</li>
     <li><b>Notifiche:</b> per mostrarti avvisi dell'app (es. servizio attivo durante una sessione).</li>
-    <li><b>Internet:</b> usato solo per scaricare le mappe (OpenStreetMap) e calcolare i percorsi.</li>
-    <li><b>Fotocamera e Galleria:</b> usati unicamente in locale per registrare un video o scegliere una foto di sfondo per creare una "Storia" o "Sfida". Non trasmettiamo i file a noi.</li>
-    <li><b>Rete Locale (Local Network):</b> usato esclusivamente su iOS per collegarsi agli adattatori OBD-II Wi-Fi.</li>
+    <li><b>Internet:</b> usato solo per scaricare le mappe (OpenStreetMap/Esri) e calcolare i percorsi.</li>
+    <li><b>Fotocamera, Microfono e Galleria:</b> usati unicamente in locale per registrare un video (con audio) o scegliere una foto di sfondo per creare un highlight social ("Storia"). I file non vengono trasmessi a noi.</li>
+    <li><b>Rete Locale (solo iOS):</b> usato esclusivamente per collegarsi agli adattatori OBD-II Wi-Fi.</li>
+    <li><b>Apple Music (solo iOS):</b> per mostrare il brano corrente e controllare la riproduzione musicale.</li>
+    <li><b>Schermo attivo (Wakelock):</b> per impedire lo spegnimento dello schermo durante la guida nella HUD o nei Tour.</li>
   </ul>
 
   <h3>3. Servizi di terze parti</h3>
   <p>Per mostrare le mappe e calcolare i percorsi, l'app richiede i dati a fornitori esterni di mappe/routing (es. OpenStreetMap). Tali server ricevono richieste standard di rete (come l'indirizzo IP del dispositivo e le coordinate dell'area mostrata). Noi non riceviamo né conserviamo questi dati. Vedi: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy">Privacy di OpenStreetMap</a>.</p>
 
   <h3>4. Abbonamenti e Acquisti In-App (Premium)</h3>
-  <p>Razorline offre funzionalità avanzate tramite l'abbonamento "Premium". I pagamenti sono gestiti in modo esclusivo e sicuro dall'App Store di Apple e dal Google Play Store. Noi non raccogliamo, elaboriamo o conserviamo in alcun modo i tuoi dati finanziari, carte di credito o informazioni di fatturazione. Lo stato dell'abbonamento è verificato interrogando lo store locale del dispositivo.</p>
+  <p>Razorline offre funzionalità avanzate tramite l'abbonamento "Premium". I pagamenti sono gestiti in modo esclusivo e sicuro dall'App Store di Apple e dal Google Play Store. Noi non raccogliamo, elaboriamo o conserviamo in alcun modo i tuoi dati finanziari o carte di credito. Lo stato dell'abbonamento è verificato interrogando lo store. Una minima cache cifrata di verifica dell'abbonamento può restare nel Keychain iOS o nell'archivio sicuro Android per garantire il funzionamento offline (grace period). Apple e Google conservano record transazionali secondo i propri obblighi legali e antifrode.</p>
 
   <h3>5. Condivisione e vendita dei dati</h3>
   <p>Non condividiamo e non vendiamo alcun dato. Se decidi tu di esportare o condividere un file (GPX, CSV o una "sfida"), quell'azione è avviata volontariamente da te tramite il menu di condivisione del dispositivo.</p>
@@ -127,20 +129,22 @@
   <h3>2. Permissions and why they are needed</h3>
   <ul>
     <li><b>Location (GPS), including in the background:</b> used to time your laps, record your trajectory and show the map. Background use lets a session keep timing even when the screen is off. Location is processed on the device and is not transmitted to us.</li>
-    <li><b>Bluetooth:</b> used only to connect to the OBD-II adapter (ELM327) and read vehicle telemetry (speed, RPM, temperatures, etc.). Data stays local.</li>
+    <li><b>Bluetooth:</b> used only to connect to the OBD-II adapter (ELM327) via classic Bluetooth or BLE to read vehicle telemetry.</li>
     <li><b>Motion sensors:</b> used to display G-forces while driving. They stay on the device.</li>
-    <li><b>Notification access (Android only, optional):</b> if granted, it is used solely to read the active media session metadata (title/artist) and show you the player controls. We do not read, store or transmit the content of your notifications. Revocable at any time in your system settings.</li>
+    <li><b>Notification access (Android only, optional):</b> used solely to read the active media session metadata (title/artist) and show you the player controls. We do not read or transmit the content of your notifications.</li>
     <li><b>Notifications:</b> to show app alerts (e.g. the active service during a session).</li>
-    <li><b>Internet:</b> used only to download maps (OpenStreetMap) and calculate routes.</li>
-    <li><b>Camera and Photos:</b> used solely locally to record a video or pick a photo as the background when creating a "Story" or "Challenge". We do not transmit files to us.</li>
-    <li><b>Local Network:</b> used exclusively on iOS to connect to Wi-Fi OBD-II adapters.</li>
+    <li><b>Internet:</b> used only to download maps (OpenStreetMap/Esri) and calculate routes.</li>
+    <li><b>Camera, Microphone and Photos:</b> used solely locally to record a video (with audio) or pick a photo as the background when creating a social highlight ("Story"). We do not transmit files to us.</li>
+    <li><b>Local Network (iOS only):</b> used exclusively to connect to Wi-Fi OBD-II adapters.</li>
+    <li><b>Apple Music (iOS only):</b> to show the current track and control music playback.</li>
+    <li><b>Keep Screen On (Wakelock):</b> to prevent the screen from turning off while driving in the HUD or Tours.</li>
   </ul>
 
   <h3>3. Third-party services</h3>
   <p>To display maps and calculate routes, the app requests data from external map/routing providers (e.g. OpenStreetMap). Those servers receive standard network requests (such as the device's IP address and the coordinates of the displayed area). We do not receive or retain this data. See: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy">OpenStreetMap Privacy Policy</a>.</p>
 
   <h3>4. Subscriptions and In-App Purchases (Premium)</h3>
-  <p>Razorline offers advanced features through a "Premium" subscription. Payments are handled exclusively and securely by the Apple App Store and Google Play Store. We do not collect, process, or store your financial data, credit cards, or billing info in any way. Subscription status is verified by querying the local store on your device.</p>
+  <p>Razorline offers advanced features through a "Premium" subscription. Payments are handled exclusively and securely by the Apple App Store and Google Play Store. We do not collect, process, or store your financial data or credit cards in any way. Subscription status is verified by querying the store. A minimal encrypted subscription-verification cache may remain in the iOS Keychain or Android secure storage to ensure offline functionality (grace period). Apple and Google retain transaction records under their legal and anti-fraud duties.</p>
 
   <h3>5. Data sharing and selling</h3>
   <p>We do not share or sell any data. If you choose to export or share a file (GPX, CSV or a "challenge"), that action is started voluntarily by you through your device's share menu.</p>
