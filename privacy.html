@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Razorline — Informativa sulla Privacy / Privacy Policy</title>
-<meta name="description" content="Razorline non raccoglie dati personali. Informativa sulla privacy (IT/EN)." />
+<title>Razorline — Informativa sulla Privacy</title>
+<meta name="description" content="Razorline non raccoglie dati personali. Informativa sulla privacy." />
 <link rel="icon" href="icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,17 +41,16 @@
   main{padding:8px 0 40px}
   h2{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:24px;margin:34px 0 6px;
     color:var(--accent2);scroll-margin-top:80px}
-  .lang{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:3px;
-    text-transform:uppercase;color:var(--muted);border-top:1px solid var(--line);
-    padding-top:30px;margin-top:46px}
   h3{font-size:17px;margin:22px 0 4px}
   p{color:#cdd8e8;margin:6px 0}
-  ul{margin:8px 0 8px 4px;list-style:none}
-  li{color:#cdd8e8;margin:10px 0;padding-left:22px;position:relative}
-  li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:50%;
-    background:var(--accent);box-shadow:0 0 8px rgba(28,93,255,.6)}
-  li b{color:var(--text)}
-  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--muted);font-size:13px}
+  
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin:16px 0 32px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .card .ic{font-size:32px;margin-bottom:16px;background:rgba(28,93,255,.1);width:56px;height:56px;
+    display:flex;align-items:center;justify-content:center;border-radius:12px}
+  .card h3{margin-top:0;}
+
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
   footer a{margin:0 8px}
   @media(max-width:560px){header h1{font-size:34px}}
 </style>
@@ -61,7 +60,11 @@
 <nav>
   <div class="wrap">
     <a class="brand" href="index.html"><img src="icon.png" alt="Razorline" /><b>RAZORLINE</b></a>
-    <a class="back" href="index.html">← Home</a>
+    <div style="display:flex; align-items:center;">
+      <a class="back" href="index.html" style="margin-right:24px">← Home</a>
+      <a class="back" href="privacy.html" style="color:var(--text); border-bottom:2px solid var(--accent2);">IT</a>
+      <a class="back" href="privacy_en.html" style="margin-left:12px;">EN</a>
+    </div>
   </div>
 </nav>
 
@@ -75,25 +78,25 @@
 <main class="wrap">
   <div class="summary"><b>In sintesi:</b> Razorline non raccoglie dati personali, non li vende e non li condivide. Nessun account, nessuna pubblicità, nessun tracciamento. Tutto ciò che crei resta sul tuo dispositivo.</div>
 
-  <!-- ITALIANO -->
-  <h2 id="it">Italiano</h2>
-
   <h3>1. Quali dati trattiamo</h3>
   <p>Razorline funziona in locale. I dati che generi — sessioni e tempi sul giro, traiettorie GPS, tracciati e percorsi, veicoli, record e impostazioni — vengono salvati esclusivamente sulla memoria del tuo dispositivo. Non vengono inviati a noi né a server di nostra proprietà (non abbiamo server). Non chiediamo nome, email, numero di telefono o altri dati identificativi.</p>
 
-  <h3>2. Permessi e perché servono</h3>
-  <ul>
-    <li><b>Posizione (GPS), anche in background:</b> serve per cronometrare i giri, registrare la traiettoria e mostrare la mappa. L'uso in background permette di continuare a cronometrare una sessione anche a schermo spento. La posizione è elaborata sul dispositivo e non viene trasmessa a noi.</li>
-    <li><b>Bluetooth:</b> serve solo per collegarsi all'adattatore OBD-II (ELM327) via Bluetooth classico o BLE e leggere la telemetria del veicolo.</li>
-    <li><b>Sensori di movimento:</b> servono per mostrare le forze G durante la guida. Restano sul dispositivo.</li>
-    <li><b>Accesso alle notifiche (solo Android, facoltativo):</b> serve unicamente a leggere i metadati della sessione musicale attiva (titolo/artista) e mostrarti i controlli del player. Non leggiamo o trasmettiamo il contenuto delle tue notifiche.</li>
-    <li><b>Notifiche:</b> per mostrarti avvisi dell'app (es. servizio attivo durante una sessione).</li>
-    <li><b>Internet:</b> usato solo per scaricare i tile delle mappe (OpenStreetMap/Esri).</li>
-    <li><b>Fotocamera, Microfono e Galleria:</b> usati unicamente in locale per registrare un video (con audio) o scegliere una foto di sfondo per creare un highlight social ("Storia"). I file non vengono trasmessi a noi.</li>
-    <li><b>Rete Locale (solo iOS):</b> usato esclusivamente per collegarsi agli adattatori OBD-II Wi-Fi.</li>
-    <li><b>Apple Music (solo iOS):</b> per mostrare il brano corrente e controllare la riproduzione musicale.</li>
-    <li><b>Schermo attivo (Wakelock):</b> per impedire lo spegnimento dello schermo durante la guida nella HUD o nei Tour.</li>
-  </ul>
+  <div id="permissions" style="margin-top:40px;">
+    <h2>2. Permessi trasparenti e perché servono</h2>
+    <p>Ogni permesso ha un solo scopo: far funzionare l'app in locale. Ecco esattamente cosa serve e perché.</p>
+    <div class="grid">
+      <div class="card"><div class="ic">📍</div><h3>Posizione GPS</h3><p>Per cronometrare i giri, registrare la traiettoria e mostrare la mappa. In background serve per continuare a cronometrare a schermo spento. La posizione è elaborata sul dispositivo e non viene trasmessa a noi.</p></div>
+      <div class="card"><div class="ic">📶</div><h3>Bluetooth</h3><p>Per collegarsi all'adattatore OBD-II (ELM327) via Bluetooth o BLE e leggere la telemetria.</p></div>
+      <div class="card"><div class="ic">🌐</div><h3>Internet</h3><p>Esclusivamente per scaricare i tile delle mappe (OpenStreetMap/Esri). Nessun dato personale viene inviato a nostri server.</p></div>
+      <div class="card"><div class="ic">📳</div><h3>Sensori movimento</h3><p>Per misurare e mostrare le forze G in tempo reale. I dati restano sul dispositivo.</p></div>
+      <div class="card"><div class="ic">🔔</div><h3>Notifiche</h3><p>Per gli avvisi dell'app, come mostrare che il servizio è attivo durante una sessione in background.</p></div>
+      <div class="card"><div class="ic">🎧</div><h3>Accesso notifiche</h3><p>(Solo Android, facoltativo) Per leggere il titolo del brano in riproduzione e mostrarti i controlli. Non leggiamo o trasmettiamo il contenuto delle tue notifiche.</p></div>
+      <div class="card"><div class="ic">📸</div><h3>Fotocamera &amp; Media</h3><p>Usati unicamente in locale per registrare un video (con audio) o scegliere una foto di sfondo per creare un highlight social ("Storia"). I file non vengono trasmessi a noi.</p></div>
+      <div class="card"><div class="ic">📡</div><h3>Rete locale</h3><p>(Solo iOS) Per collegarsi agli adattatori OBD-II Wi-Fi sulla rete locale.</p></div>
+      <div class="card"><div class="ic">🎵</div><h3>Apple Music</h3><p>(Solo iOS) Per mostrare il brano corrente e controllare la riproduzione musicale durante la guida.</p></div>
+      <div class="card"><div class="ic">🔋</div><h3>Schermo attivo</h3><p>Wakelock per impedire lo spegnimento dello schermo durante la guida nella HUD o nei Tour.</p></div>
+    </div>
+  </div>
 
   <h3>3. Servizi di terze parti</h3>
   <p>Per mostrare le mappe, l'app richiede i dati a fornitori esterni (es. OpenStreetMap). Tali server ricevono richieste standard di rete (come l'indirizzo IP del dispositivo e le coordinate dell'area mostrata). Noi non riceviamo né conserviamo questi dati. Vedi: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy">Privacy di OpenStreetMap</a>.</p>
@@ -118,51 +121,6 @@
 
   <h3>10. Contatti</h3>
   <p>Per domande sulla privacy: <a href="mailto:support.razorline@gmail.com">support.razorline@gmail.com</a></p>
-
-  <!-- ENGLISH -->
-  <div class="lang">English</div>
-  <h2 id="en">English</h2>
-
-  <h3>1. What data we process</h3>
-  <p>Razorline works locally. The data you generate — sessions and lap times, GPS traces, tracks and routes, vehicles, records and settings — is stored exclusively on your device. It is not sent to us or to any server we own (we have no servers). We do not ask for your name, email, phone number or any identifying data.</p>
-
-  <h3>2. Permissions and why they are needed</h3>
-  <ul>
-    <li><b>Location (GPS), including in the background:</b> used to time your laps, record your trajectory and show the map. Background use lets a session keep timing even when the screen is off. Location is processed on the device and is not transmitted to us.</li>
-    <li><b>Bluetooth:</b> used only to connect to the OBD-II adapter (ELM327) via classic Bluetooth or BLE to read vehicle telemetry.</li>
-    <li><b>Motion sensors:</b> used to display G-forces while driving. They stay on the device.</li>
-    <li><b>Notification access (Android only, optional):</b> used solely to read the active media session metadata (title/artist) and show you the player controls. We do not read or transmit the content of your notifications.</li>
-    <li><b>Notifications:</b> to show app alerts (e.g. the active service during a session).</li>
-    <li><b>Internet:</b> used only to download map tiles (OpenStreetMap/Esri).</li>
-    <li><b>Camera, Microphone and Photos:</b> used solely locally to record a video (with audio) or pick a photo as the background when creating a social highlight ("Story"). We do not transmit files to us.</li>
-    <li><b>Local Network (iOS only):</b> used exclusively to connect to Wi-Fi OBD-II adapters.</li>
-    <li><b>Apple Music (iOS only):</b> to show the current track and control music playback.</li>
-    <li><b>Keep Screen On (Wakelock):</b> to prevent the screen from turning off while driving in the HUD or Tours.</li>
-  </ul>
-
-  <h3>3. Third-party services</h3>
-  <p>To display maps, the app requests map tiles from external providers (e.g. OpenStreetMap). Those servers receive standard network requests (such as the device's IP address and the coordinates of the displayed area). We do not receive or retain this data. See: <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy">OpenStreetMap Privacy Policy</a>.</p>
-
-  <h3>4. Subscriptions and In-App Purchases (Premium)</h3>
-  <p>Razorline offers advanced features through a "Premium" subscription. Payments are handled exclusively and securely by the Apple App Store and Google Play Store. We do not collect, process, or store your financial data or credit cards in any way. Subscription status is verified by querying the store. A minimal encrypted subscription-verification cache may remain in the iOS Keychain or Android secure storage to ensure offline functionality (grace period). Apple and Google retain transaction records under their legal and anti-fraud duties.</p>
-
-  <h3>5. Data sharing and selling</h3>
-  <p>We do not share or sell any data. If you choose to export or share a file (GPX, CSV or a "challenge"), that action is started voluntarily by you through your device's share menu.</p>
-
-  <h3>6. Retention and deletion</h3>
-  <p>Your data stays on your device until you delete it in the app or uninstall Razorline. Uninstalling the app removes the local data.</p>
-
-  <h3>7. Children</h3>
-  <p>The app is not intended for children under 13 and does not knowingly collect their data.</p>
-
-  <h3>8. Safe use</h3>
-  <p>Razorline is intended for closed circuits, track days or private areas. Do not use it on public roads and do not interact with the phone while driving.</p>
-
-  <h3>9. Changes</h3>
-  <p>We may update this policy. The date at the top shows the latest version.</p>
-
-  <h3>10. Contact</h3>
-  <p>For privacy questions: <a href="mailto:support.razorline@gmail.com">support.razorline@gmail.com</a></p>
 </main>
 
 <footer>
