@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Razorline — GPS Lap Timer & OBD Telemetry</title>
+<title>Razorline — GPS Lap Timer &amp; OBD Telemetry</title>
 <meta name="description" content="Razorline: F1-style lap timing, OBD-II telemetry and maps in a single HUD. Push to the limit." />
 <link rel="icon" href="icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,7 +13,7 @@
   :root{
     --bg:#05070f; --bg2:#0d182c; --panel:#0e1726;
     --accent:#1c5dff; --accent2:#6b9aff; --red:#ff3658;
-    --silver:#e6eef7; --text:#f2f7fc; --muted:#9fb0c5;
+    --silver:#e6eef7; --text:#f2f7fc; --muted:#b0c0d4;
     --line:rgba(230,238,247,.08);
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -23,11 +23,28 @@
     color:var(--text); background:var(--bg); line-height:1.6;
     -webkit-font-smoothing:antialiased; overflow-x:hidden;
   }
+
+  /* Accessibility: Skip link */
+  .skip-link{
+    position:absolute; top:-100%; left:16px; z-index:100;
+    background:var(--accent); color:#fff; padding:12px 24px;
+    border-radius:0 0 8px 8px; font-weight:600; font-size:14px;
+    text-decoration:none; transition:top .2s;
+  }
+  .skip-link:focus{top:0}
+
+  /* Accessibility: Screen reader only */
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
   :focus-visible{
     outline:2px solid var(--accent2);
     outline-offset:2px;
     border-radius:4px;
   }
+
   /* sfondo: gradiente + griglia in sbieco + bagliore blu */
   body::before{
     content:""; position:fixed; inset:-20% -20% -20% -20%; z-index:-2;
@@ -61,6 +78,33 @@
   nav a.link:hover{color:var(--text)}
   .nav-links{display:flex; align-items:center}
 
+  /* Hamburger menu (mobile) */
+  .hamburger{
+    display:none; background:none; border:1px solid var(--line); color:var(--text);
+    padding:8px; border-radius:8px; cursor:pointer; width:44px; height:44px;
+    align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .hamburger svg{display:block}
+  .mobile-overlay{
+    display:none; position:fixed; inset:0; z-index:50;
+    background:rgba(5,7,15,.96); backdrop-filter:blur(20px);
+    flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    padding:24px;
+  }
+  .mobile-overlay.open{display:flex}
+  .mobile-overlay a{
+    color:var(--text); text-decoration:none; font-size:20px; font-weight:600;
+    padding:14px 32px; border-radius:12px; transition:.2s;
+    width:100%; max-width:320px; text-align:center;
+  }
+  .mobile-overlay a:hover,.mobile-overlay a:focus-visible{background:rgba(28,93,255,.15)}
+  .mobile-close{
+    position:absolute; top:16px; right:16px; background:none; border:1px solid var(--line);
+    color:var(--text); width:44px; height:44px; border-radius:8px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:24px;
+  }
+  .mobile-overlay .lang-row{display:flex; gap:16px; margin-top:16px}
+
   /* HERO */
   header{padding:72px 0 40px}
   .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center}
@@ -79,6 +123,22 @@
   .btn-ghost{border:1px solid var(--line); color:var(--text)}
   .btn-ghost:hover{border-color:var(--accent2); color:var(--accent2)}
   .soon{font-size:12px; color:var(--muted); margin-top:14px; letter-spacing:.5px}
+
+  /* Download buttons */
+  .downloads{display:flex; gap:14px; margin-top:24px; flex-wrap:wrap}
+  .download-btn{
+    display:inline-flex; align-items:center; gap:12px; text-decoration:none;
+    padding:12px 20px; border-radius:12px; border:1px solid var(--line);
+    color:var(--text); background:rgba(255,255,255,.03);
+    transition:.25s; min-height:52px; min-width:170px;
+  }
+  .download-btn:hover,.download-btn:focus-visible{
+    border-color:var(--accent2); background:rgba(28,93,255,.08);
+    transform:translateY(-2px); box-shadow:0 8px 24px rgba(28,93,255,.2);
+  }
+  .download-btn svg{flex-shrink:0}
+  .download-btn .dl-label{font-size:11px; color:var(--muted); line-height:1.2}
+  .download-btn .dl-store{font-size:16px; font-weight:700; font-family:'Rajdhani',sans-serif; line-height:1.2}
 
   /* PHONE MOCKUP (ricrea lo splash) */
   .phone{justify-self:center; width:280px; height:560px; border-radius:38px; padding:12px;
@@ -104,6 +164,9 @@
     background:rgba(28,93,255,.14); border:1px solid rgba(28,93,255,.3); margin-bottom:14px}
   .card h3{font-size:18px; margin-bottom:6px; font-weight:700}
   .card p{color:var(--muted); font-size:14.5px}
+  .card .beta-badge{display:inline-block; font-size:10px; font-weight:700; letter-spacing:1px;
+    background:rgba(255,54,88,.15); color:var(--red); padding:2px 8px; border-radius:4px;
+    margin-left:6px; vertical-align:middle; text-transform:uppercase}
 
   /* MODES */
   .modes{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
@@ -116,18 +179,25 @@
   .pill.r{background:rgba(255,54,88,.15); color:var(--red)}
 
   /* PRIVACY */
-  .privacy{background:linear-gradient(160deg, rgba(28,93,255,.08), rgba(255,255,255,.01));
+  .privacy-box{background:linear-gradient(160deg, rgba(28,93,255,.08), rgba(255,255,255,.01));
     border:1px solid rgba(28,93,255,.25); border-radius:22px; padding:48px; text-align:center}
-  .privacy h2{font-family:'Rajdhani',sans-serif; font-size:36px; font-weight:700}
-  .privacy p{color:var(--muted); max-width:640px; margin:14px auto 0; font-size:16px}
+  .privacy-box h2{font-family:'Rajdhani',sans-serif; font-size:36px; font-weight:700}
+  .privacy-box p{color:var(--muted); max-width:640px; margin:14px auto 0; font-size:16px}
   .chips{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:24px}
   .chip{font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px;
-    border:1px solid var(--line); color:var(--text); background:rgba(255,255,255,.02)}
-  .chip::before{content:"✓ "; color:var(--accent2); font-weight:800}
+    border:1px solid var(--line); color:var(--text); background:rgba(255,255,255,.02);
+    display:inline-flex; align-items:center; gap:6px}
+  .chip-check{color:var(--accent2); font-weight:800}
 
   /* DISCLAIMER */
   .disc{margin-top:48px; border:1px solid rgba(255,54,88,.3); background:rgba(255,54,88,.07);
-    border-radius:14px; padding:18px 22px; color:#ffc9d3; font-size:14px; text-align:center}
+    border-radius:14px; padding:18px 22px; color:#ffd4dc; font-size:14px; text-align:center}
+
+  /* Download CTA */
+  .download-cta{text-align:center; padding:48px 0; border-top:1px solid var(--line)}
+  .download-cta h2{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:36px; margin-bottom:8px}
+  .download-cta p{color:var(--muted); font-size:16px; margin-bottom:24px}
+  .download-cta .downloads{justify-content:center}
 
   footer{border-top:1px solid var(--line); padding:40px 0; margin-top:40px}
   footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px}
@@ -139,35 +209,68 @@
   @media(max-width:900px){
     .hero{grid-template-columns:1fr; text-align:center}
     .lead{margin-left:auto; margin-right:auto}
-    .cta{justify-content:center}
+    .cta,.downloads{justify-content:center}
     h1{font-size:48px}
     .grid,.modes{grid-template-columns:1fr 1fr}
     .nav-links{display:none}
+    .hamburger{display:flex}
   }
   @media(max-width:560px){
     .grid,.modes{grid-template-columns:1fr}
     h1{font-size:40px}
     section{padding:48px 0}
-    .privacy{padding:32px 22px}
+    .privacy-box{padding:32px 22px}
+    .download-btn{width:100%; justify-content:center}
+    .downloads{flex-direction:column; align-items:stretch}
+  }
+
+  /* Reduced motion preference */
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
   }
 </style>
 </head>
 <body>
 
-<nav>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav role="navigation" aria-label="Main navigation">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Back to top"><img src="icon.png" alt="Razorline Logo" /><b>RAZORLINE</b></a>
-    <div class="nav-links" aria-label="Main menu">
+    <a class="brand" href="#top" aria-label="Razorline — Back to top"><img src="icon.png" alt="Razorline Logo" /><b>RAZORLINE</b></a>
+    <div class="nav-links">
       <a class="link" href="#features">Features</a>
       <a class="link" href="#modes">Start</a>
       <a class="link" href="#premium">Premium</a>
       <a class="link" href="privacy_en.html#permissions">Permissions</a>
       <a class="link" href="#privacy">Privacy</a>
       <a class="link" href="index.html" style="margin-left:32px" aria-label="Italian">IT</a>
-      <a class="link" href="index_en.html" style="margin-left:12px; color:var(--text); border-bottom:2px solid var(--accent2)" aria-label="English">EN</a>
+      <a class="link" href="index_en.html" style="margin-left:12px; color:var(--text); border-bottom:2px solid var(--accent2)" aria-label="English" aria-current="page">EN</a>
     </div>
+    <button class="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </nav>
+
+<div class="mobile-overlay" id="mobile-menu" role="dialog" aria-label="Navigation menu" aria-modal="true">
+  <button class="mobile-close" aria-label="Close menu">&#10005;</button>
+  <a href="#features">Features</a>
+  <a href="#modes">Start</a>
+  <a href="#premium">Premium</a>
+  <a href="privacy_en.html#permissions">Permissions</a>
+  <a href="#privacy">Privacy</a>
+  <div class="lang-row">
+    <a href="index.html" aria-label="Italian">IT</a>
+    <a href="index_en.html" aria-label="English" aria-current="page" style="color:var(--accent2); border-bottom:2px solid var(--accent2)">EN</a>
+  </div>
+</div>
+
+<main id="main-content">
 
 <header id="top">
   <div class="wrap hero">
@@ -176,25 +279,24 @@
       <h1>Push to the <span class="stroke">limit</span>.</h1>
       <p class="lead">F1-style lap timing, OBD-II telemetry and maps — all in a single HUD designed for the track. Every tenth counts.</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#features" aria-label="Discover features">Discover features →</a>
-        <a class="btn btn-ghost" href="#privacy" aria-label="Privacy information">Privacy</a>
+        <a class="btn btn-primary" href="#features">Discover features →</a>
+        <a class="btn btn-ghost" href="#privacy">Privacy</a>
       </div>
-      <div class="downloads" style="display:flex; gap:14px; margin-top:24px; flex-wrap:wrap">
-        <a href="https://apps.apple.com/ch/app/razorline-cronometro-gps-obd/id6785917563" class="btn btn-ghost" aria-label="Download on the App Store" style="padding:10px 16px; border-color:var(--line); gap:12px">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="img"><title>Apple Logo</title><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.54-1.55 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-          <div style="text-align:left; line-height:1.2"><div style="font-size:10px; color:var(--muted)">Download on the</div><div style="font-size:15px; font-weight:700; font-family:'Rajdhani',sans-serif">App Store</div></div>
+      <div class="downloads">
+        <a href="https://apps.apple.com/app/id6785917563" class="download-btn" aria-label="Download Razorline on the App Store for iOS">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="img" aria-hidden="true"><title>Apple Logo</title><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.54-1.55 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          <div><div class="dl-label">Download on the</div><div class="dl-store">App Store</div></div>
         </a>
-        <a href="https://play.google.com/store/apps/details?id=com.razorline.gps" class="btn btn-ghost" aria-label="Get it on Google Play" style="padding:10px 16px; border-color:var(--line); gap:12px">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="img"><title>Google Play Logo</title><path d="M17.82 13.91c-1.39.81-2.9 1.67-4.22 2.45l-4.57-4.57 4.55-4.55c1.33.78 2.85 1.65 4.24 2.47a1.64 1.64 0 0 1 0 2.82M4.99 4.39C4.41 4.75 4 5.48 4 6.38v11.23c0 .9.41 1.63.99 1.99l7.08-7.08-7.08-8.13zm13.78 6.7c1.39.81 1.39 2.14 0 2.96l-1.07.62-1.92-1.92 1.93-1.93 1.06.62M6.16 2.5c.34-.2.83-.22 1.35.08l4.9 2.86-5.11 5.11-1.14-8.05zM6.16 21.5c.34.2.83.22 1.35-.08l4.9-2.86-5.11-5.11-1.14 8.05z"/></svg>
-          <div style="text-align:left; line-height:1.2"><div style="font-size:10px; color:var(--muted)">Get it on</div><div style="font-size:15px; font-weight:700; font-family:'Rajdhani',sans-serif">Google Play</div></div>
+        <a href="https://play.google.com/store/apps/details?id=com.razorline.gps" class="download-btn" aria-label="Get Razorline on Google Play for Android">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="img" aria-hidden="true"><title>Google Play Logo</title><path d="M3.61 1.81L13.43 12 3.61 22.19A1.63 1.63 0 0 1 3 20.84V3.16c0-.52.22-.99.61-1.35zM14.54 13.11l2.41 2.41-9.73 5.51 7.32-7.92zm5.34-3.07c.93.53.93 1.39 0 1.92l-1.84 1.04-2.64-2.64 2.64-2.64 1.84 1.04v.28zM7.22 2.27l9.73 5.51-2.41 2.41-7.32-7.92z"/></svg>
+          <div><div class="dl-label">Get it on</div><div class="dl-store">Google Play</div></div>
         </a>
       </div>
     </div>
 
-    <div class="phone">
+    <div class="phone" aria-hidden="true">
       <div class="notch"></div>
-      <!-- Ricostruzione dello splash: linea di gara + nodo + traguardo -->
-      <svg viewBox="0 0 280 560" xmlns="http://www.w3.org/2000/svg" aria-label="Anteprima app">
+      <svg viewBox="0 0 280 560" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stop-color="#070b15"/>
@@ -220,129 +322,169 @@
           </g>
         </g>
         <rect width="280" height="560" fill="url(#glow)"/>
-
-        <!-- badge top -->
         <rect x="22" y="34" width="120" height="22" rx="4" fill="#1c5dff" fill-opacity=".14" stroke="#1c5dff" stroke-opacity=".45"/>
         <text x="33" y="49" fill="#cdd8e8" font-family="Inter,sans-serif" font-size="9" letter-spacing="2">GPS LAP TIMER</text>
-
-        <!-- linea base (grigia) -->
         <path d="M40,470 C60,360 120,470 150,360 C175,300 205,330 250,200"
               fill="none" stroke="#7c8695" stroke-width="9" stroke-linecap="round"/>
-        <!-- segmento attivo (blu) -->
         <path d="M40,470 C60,360 120,470 150,360"
               fill="none" stroke="#1c5dff" stroke-width="10" stroke-linecap="round" filter="url(#soft)" opacity=".7"/>
         <path d="M40,470 C60,360 120,470 150,360"
               fill="none" stroke="#3f73ff" stroke-width="9" stroke-linecap="round"/>
-
-        <!-- traguardo (gate) -->
         <g transform="rotate(28 205 300)">
           <rect x="183" y="294" width="44" height="9" rx="4.5" fill="#1c5dff" fill-opacity=".5" filter="url(#soft)"/>
           <rect x="185" y="295" width="40" height="7" rx="3.5" fill="#ecf2f9"/>
         </g>
-
-        <!-- nodo pulsante -->
         <circle cx="150" cy="360" r="20" fill="#1c5dff" fill-opacity=".22"/>
         <circle cx="150" cy="360" r="9" fill="#fff"/>
         <circle cx="150" cy="360" r="4" fill="#1c5dff"/>
-
-        <!-- chip cronometro -->
         <rect x="150" y="430" width="106" height="40" rx="8" fill="#0e1726" fill-opacity=".85" stroke="#1c5dff" stroke-opacity=".35"/>
         <text x="166" y="457" fill="#f2f7fc" font-family="Inter,sans-serif" font-weight="800" font-size="22">00:03.34</text>
-
-        <!-- wordmark -->
         <text x="22" y="512" fill="#f2f7fc" font-family="Rajdhani,sans-serif" font-weight="700" font-size="30" letter-spacing="5">RAZORLINE</text>
-        <text x="23" y="532" fill="#9fb0c5" font-family="Inter,sans-serif" font-size="9" letter-spacing="3">TELEMETRIA · SETTORI · GPS</text>
+        <text x="23" y="532" fill="#9fb0c5" font-family="Inter,sans-serif" font-size="9" letter-spacing="3">TELEMETRY · SECTORS · GPS</text>
       </svg>
     </div>
   </div>
 </header>
 
-<section id="features">
+<section id="features" aria-labelledby="features-heading">
   <div class="wrap">
     <div class="sec-head">
       <div class="tag">What it does</div>
-      <h2>Everything you need on track</h2>
+      <h2 id="features-heading">Everything you need on track</h2>
       <p>One app to time, read the engine and follow the line.</p>
     </div>
     <div class="grid">
       <div class="card"><div class="ic" aria-hidden="true">⏱️</div><h3>F1-style timing</h3><p>Purple/green/yellow sectors with history+ghost benchmark, theoretical lap and live delta. Finish line and splits on the map.</p></div>
-      <div class="card"><div class="ic" aria-hidden="true">📡</div><h3>OBD-II Telemetry</h3><p>Connect an ELM327 adapter. Monitor RPM, throttle, temperatures, fuel, and MAF. Auto-priority for GPS/OBD speed.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📡</div><h3>OBD-II Telemetry</h3><p>Connect an ELM327 adapter via Wi-Fi, Classic Bluetooth or BLE. Monitor RPM, throttle, temperatures, fuel, and MAF. Auto-priority for GPS/OBD speed.</p></div>
       <div class="card"><div class="ic" aria-hidden="true">🗺️</div><h3>Native maps &amp; routes</h3><p>Standard, satellite, and hybrid maps. Draw routes with waypoints or freehand, record Tours, import GPX or Google Maps links.</p></div>
       <div class="card"><div class="ic" aria-hidden="true">📊</div><h3>Advanced HUD &amp; Widgets</h3><p>Auto-merge adjacent cells. Insert minimap, sector map, and rally corner widgets, choosing F1, Rally, or Minimal styles.</p></div>
-      <div class="card"><div class="ic" aria-hidden="true">🏁</div><h3>Live Dashboard</h3><p>Lap, delta, sectors, route, heading-up rotating minimap, rally corner indicators, and analog or digital gauges.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🏁</div><h3>Live Dashboard</h3><p>Lap, delta, sectors, route, heading-up rotating minimap, rally corner indicators, analog or digital gauges, and a dynamic shift-light that adapts to the active vehicle's redline.</p></div>
       <div class="card"><div class="ic" aria-hidden="true">👻</div><h3>Ghosts &amp; Challenges</h3><p>Beat the best ghost time (dot on the minimap). The purple benchmark adapts dynamically between your record and the ghost.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🎬</div><h3>GoPro &amp; Video Editor</h3><p>Connect and control GoPro via BLE. Sync video with telemetry and overlay HUD, map and data (speed, G-force, sectors) directly onto footage with the built-in Pro Editor.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🛰️</div><h3>External High-Frequency GPS</h3><p>Support for external BLE GPS receivers (10–25 Hz: Garmin GLO, Dual XGPS, RaceBox). High-accuracy NMEA positioning that overrides the phone's built-in GPS.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">✅</div><h3>Preflight Check</h3><p>Pre-session checklist: verifies GPS signal, OBD connection, camera readiness and vehicle setup before hitting the track. Zero surprises.</p></div>
       <div class="card"><div class="ic" aria-hidden="true">🔧</div><h3>DTC Diagnostics</h3><p>Read Diagnostic Trouble Codes (DTC) with direct fault descriptions. Targeted PID selection (e.g., ECU voltage, oil pressure).</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🧪</div><h3>OBD-II Simulator</h3><p>Built-in software simulator generating mock telemetry data. Test your HUD and custom layouts without an ELM327 adapter or real car.</p></div>
       <div class="card"><div class="ic" aria-hidden="true">🚨</div><h3>Personal speed traps</h3><p>Place your targets on the map. Always-on GPS background monitoring and separate records for each vehicle.</p></div>
       <div class="card"><div class="ic" aria-hidden="true">🏎️</div><h3>Vehicles &amp; comparison</h3><p>Built-in offline catalog. Manage multiple cars, save setups, and compare best laps and sectors on the same track.</p></div>
       <div class="card"><div class="ic" aria-hidden="true">🎵</div><h3>Music control</h3><p>Control play/pause and tracks for Spotify/YouTube Music (and others) without leaving the app. (Android exclusive).</p></div>
       <div class="card"><div class="ic" aria-hidden="true">📸</div><h3>Social highlights</h3><p>Create vertical stories with your photos/videos and colored sector times (purple/green/yellow) ready for social networks.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📹</div><h3>Native video recording<span class="beta-badge">Beta</span></h3><p>Record track sessions with the phone's camera while syncing telemetry and lap timer in real time.</p></div>
       <div class="card"><div class="ic" aria-hidden="true">📂</div><h3>Analysis &amp; Export</h3><p>Synchronized replay on map, speed-trace, and G-G diagram. Professional export in CSV, GPX, VBO, and NMEA (Premium).</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🛡️</div><h3>Secure diagnostic reports</h3><p>Exportable debug logs for tech support. The app automatically obfuscates VIN, GPS coordinates, passwords and sensitive tokens.</p></div>
     </div>
   </div>
 </section>
 
-<section id="modes">
+<section id="modes" aria-labelledby="modes-heading">
   <div class="wrap">
     <div class="sec-head">
       <div class="tag">Starting a lap</div>
-      <h2>Start how you want</h2>
+      <h2 id="modes-heading">Start how you want</h2>
       <p>Three modes to start the timer perfectly.</p>
     </div>
     <div class="modes">
       <div class="mode"><span class="pill b">MANUAL</span><div class="big">Now</div><p>Press Start and the time begins instantly. The lap closes when you cross the finish line again.</p></div>
-      <div class="mode"><span class="pill r">LIGHTS</span><div class="big">On green</div><p>Starting grid style: the timer starts exactly when the lights go out.</p></div>
+      <div class="mode"><span class="pill r">LIGHTS</span><div class="big">On green</div><p>Starting grid style: 5-light sequence with vibration feedback. The timer starts when lights go out. Also available as automatic rolling start above 5 km/h.</p></div>
       <div class="mode"><span class="pill b">AUTOMATIC</span><div class="big">At the line</div><p>Arms automatically near the line: the time starts the moment you cross the start line.</p></div>
     </div>
   </div>
 </section>
 
-<section id="premium">
+<section id="premium" aria-labelledby="premium-heading">
   <div class="wrap">
     <div class="sec-head">
       <div class="tag">Subscription</div>
-      <h2>Razorline Premium</h2>
+      <h2 id="premium-heading">Razorline Premium</h2>
       <p>The app offers a basic free layer for timing. Upgrade to Premium to unlock all advanced tools.</p>
     </div>
     <div class="modes">
       <div class="mode"><span class="pill b">FREE</span><div class="big">Basic</div><p>F1 timing, live HUD, GPS &amp; maps, up to 2 routes and 1 vehicle, basic history, OBD &amp; diagnostics, social highlights.</p></div>
-      <div class="mode"><span class="pill r">PREMIUM</span><div class="big">3-day trial</div><p>Monthly subscription with a 3-day free trial on Android. Unlocks: full HUD editor, ghosts &amp; challenges, replay &amp; analysis, car comparison, VBO/NMEA export, unlimited routes &amp; advanced OBD.</p></div>
+      <div class="mode"><span class="pill r">PREMIUM</span><div class="big">3-day trial</div><p>Monthly subscription with a 3-day free trial on Android. Unlocks: full HUD editor, ghosts &amp; challenges, replay &amp; analysis, car comparison, VBO/NMEA export, unlimited routes, advanced OBD, and guaranteed offline access for 72 hours without network.</p></div>
       <div class="mode"><span class="pill b">IN-APP</span><div class="big">Official Stores</div><p>Payment is handled securely only through your Apple App Store or Google Play Store. No payment data passes through the app.</p></div>
     </div>
   </div>
 </section>
 
-<section id="privacy">
+<section id="privacy" aria-labelledby="privacy-heading">
   <div class="wrap">
-    <div class="privacy">
+    <div class="privacy-box">
       <div class="tag">Privacy</div>
-      <h2>Your data stays yours</h2>
+      <h2 id="privacy-heading">Your data stays yours</h2>
       <p>The developer does not receive, sell or use your session data for tracking. Location, Bluetooth and sensors power local features; maps and purchases use the official Google, Apple and store services described in the policy.</p>
-      <div class="chips">
-        <span class="chip">No accounts</span>
-        <span class="chip">No tracking</span>
-        <span class="chip">No ads</span>
-        <span class="chip">Sessions on your phone</span>
-        <span class="chip">No servers of ours</span>
-        <span class="chip">Camera only for stories</span>
+      <div class="chips" role="list">
+        <span class="chip" role="listitem"><span class="chip-check" aria-hidden="true">✓</span> No accounts</span>
+        <span class="chip" role="listitem"><span class="chip-check" aria-hidden="true">✓</span> No tracking</span>
+        <span class="chip" role="listitem"><span class="chip-check" aria-hidden="true">✓</span> No ads</span>
+        <span class="chip" role="listitem"><span class="chip-check" aria-hidden="true">✓</span> Sessions on your phone</span>
+        <span class="chip" role="listitem"><span class="chip-check" aria-hidden="true">✓</span> No servers of ours</span>
+        <span class="chip" role="listitem"><span class="chip-check" aria-hidden="true">✓</span> Camera only for stories</span>
       </div>
       <div style="margin-top:26px"><a class="btn btn-ghost" href="privacy_en.html">Read the full policy →</a></div>
     </div>
 
-    <div class="disc">⚠️ Razorline is intended ONLY for closed circuits, track days or private areas. Do not use on public roads and do not interact with the phone while driving.</div>
+    <div class="disc" role="alert">⚠️ Razorline is intended ONLY for closed circuits, track days or private areas. Do not use on public roads and do not interact with the phone while driving.</div>
   </div>
 </section>
 
-<footer>
+<section class="download-cta" aria-labelledby="download-heading">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Back to top"><img src="icon.png" alt="Razorline Logo" /><b>RAZORLINE</b></a>
-    <div aria-label="Useful links">
+    <h2 id="download-heading">Download Razorline</h2>
+    <p>Available for free on iOS and Android.</p>
+    <div class="downloads">
+      <a href="https://apps.apple.com/app/id6785917563" class="download-btn" aria-label="Download Razorline on the App Store for iOS">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="img" aria-hidden="true"><title>Apple Logo</title><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.54-1.55 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        <div><div class="dl-label">Download on the</div><div class="dl-store">App Store</div></div>
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.razorline.gps" class="download-btn" aria-label="Get Razorline on Google Play for Android">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="img" aria-hidden="true"><title>Google Play Logo</title><path d="M3.61 1.81L13.43 12 3.61 22.19A1.63 1.63 0 0 1 3 20.84V3.16c0-.52.22-.99.61-1.35zM14.54 13.11l2.41 2.41-9.73 5.51 7.32-7.92zm5.34-3.07c.93.53.93 1.39 0 1.92l-1.84 1.04-2.64-2.64 2.64-2.64 1.84 1.04v.28zM7.22 2.27l9.73 5.51-2.41 2.41-7.32-7.92z"/></svg>
+        <div><div class="dl-label">Get it on</div><div class="dl-store">Google Play</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Razorline — Back to top"><img src="icon.png" alt="Razorline Logo" /><b>RAZORLINE</b></a>
+    <nav aria-label="Useful links">
       <a class="link" href="#features">Features</a>
       <a class="link" href="privacy_en.html">Privacy</a>
       <a class="link" href="mailto:support.razorline@gmail.com">Contact</a>
-    </div>
+    </nav>
   </div>
-  <div class="wrap copy" style="margin-top:18px">© 2026 Federico Gusmeroli · Razorline — GPS lap timer &amp; telemetria OBD.</div>
+  <div class="wrap copy" style="margin-top:18px">© 2026 Federico Gusmeroli · Razorline — GPS lap timer &amp; OBD telemetry.</div>
 </footer>
+
+<script>
+(function(){
+  var btn=document.querySelector('.hamburger');
+  var overlay=document.getElementById('mobile-menu');
+  var closeBtn=overlay.querySelector('.mobile-close');
+  var links=overlay.querySelectorAll('a');
+  function open(){
+    overlay.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    closeBtn.focus();
+    document.body.style.overflow='hidden';
+  }
+  function close(){
+    overlay.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    btn.focus();
+    document.body.style.overflow='';
+  }
+  btn.addEventListener('click',open);
+  closeBtn.addEventListener('click',close);
+  overlay.addEventListener('click',function(e){if(e.target===overlay)close();});
+  links.forEach(function(l){l.addEventListener('click',close);});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&overlay.classList.contains('open'))close();
+  });
+})();
+</script>
 
 </body>
 </html>

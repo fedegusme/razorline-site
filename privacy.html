@@ -13,12 +13,28 @@
   :root{
     --bg:#05070f; --bg2:#0d182c; --panel:#0e1726;
     --accent:#1c5dff; --accent2:#6b9aff; --red:#ff3658;
-    --silver:#e6eef7; --text:#f2f7fc; --muted:#9fb0c5; --line:rgba(230,238,247,.08);
+    --silver:#e6eef7; --text:#f2f7fc; --muted:#b0c0d4; --line:rgba(230,238,247,.08);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);
     background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
+
+  /* Accessibility: Skip link */
+  .skip-link{
+    position:absolute; top:-100%; left:16px; z-index:100;
+    background:var(--accent); color:#fff; padding:12px 24px;
+    border-radius:0 0 8px 8px; font-weight:600; font-size:14px;
+    text-decoration:none; transition:top .2s;
+  }
+  .skip-link:focus{top:0}
+
+  :focus-visible{
+    outline:2px solid var(--accent2);
+    outline-offset:2px;
+    border-radius:4px;
+  }
+
   body::before{content:"";position:fixed;inset:-20%;z-index:-2;
     background:radial-gradient(55% 45% at 30% 20%, rgba(28,93,255,.16), transparent 70%),
       linear-gradient(160deg,#06080f,#0b1424 55%,#0d182c)}
@@ -53,17 +69,29 @@
   footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
   footer a{margin:0 8px}
   @media(max-width:560px){header h1{font-size:34px}}
+
+  /* Reduced motion preference */
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
 
-<nav>
+<a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+
+<nav role="navigation" aria-label="Navigazione secondaria">
   <div class="wrap">
-    <a class="brand" href="index.html"><img src="icon.png" alt="Razorline" /><b>RAZORLINE</b></a>
+    <a class="brand" href="index.html" aria-label="Razorline — Torna alla Home"><img src="icon.png" alt="Logo Razorline" /><b>RAZORLINE</b></a>
     <div style="display:flex; align-items:center;">
       <a class="back" href="index.html" style="margin-right:24px">← Home</a>
-      <a class="back" href="privacy.html" style="color:var(--text); border-bottom:2px solid var(--accent2);">IT</a>
-      <a class="back" href="privacy_en.html" style="margin-left:12px;">EN</a>
+      <a class="back" href="privacy.html" style="color:var(--text); border-bottom:2px solid var(--accent2);" aria-label="Italiano" aria-current="page">IT</a>
+      <a class="back" href="privacy_en.html" style="margin-left:12px;" aria-label="Inglese">EN</a>
     </div>
   </div>
 </nav>
@@ -75,7 +103,7 @@
   </div>
 </header>
 
-<main class="wrap">
+<main class="wrap" id="main-content">
   <div class="summary"><b>In sintesi:</b> lo sviluppatore di Razorline non riceve i tuoi dati di sessione, non li vende e non li usa per tracciarti. Nessun account Razorline e nessuna pubblicità. Sessioni e telemetria restano sul dispositivo; mappe e acquisti usano i servizi di piattaforma descritti sotto.</div>
 
   <h3>1. Quali dati trattiamo</h3>
@@ -85,15 +113,15 @@
     <h2>2. Permessi trasparenti e perché servono</h2>
     <p>Ogni permesso ha un solo scopo: far funzionare l'app in locale. Ecco esattamente cosa serve e perché.</p>
     <div class="grid">
-      <div class="card"><div class="ic">📍</div><h3>Posizione GPS</h3><p>Usata solo mentre l'app è in uso per cronometrare i giri, registrare la traiettoria e mostrare la mappa. Non viene usata quando l'app è chiusa o non in uso, è elaborata sul dispositivo e non viene trasmessa a noi.</p></div>
-      <div class="card"><div class="ic">📶</div><h3>Bluetooth</h3><p>Per collegarsi all'adattatore OBD-II (ELM327) via Bluetooth o BLE e leggere la telemetria.</p></div>
-      <div class="card"><div class="ic">🌐</div><h3>Internet</h3><p>Per mostrare Google Maps su Android o Apple Maps su iOS, verificare gli acquisti con lo store e aprire link scelti dall'utente. Razorline non invia sessioni o telemetria a server propri.</p></div>
-      <div class="card"><div class="ic">📳</div><h3>Sensori movimento</h3><p>Per misurare e mostrare le forze G in tempo reale. I dati restano sul dispositivo.</p></div>
-      <div class="card"><div class="ic">🔔</div><h3>Notifiche</h3><p>Per gli avvisi facoltativi dell'app quando una funzione visibile li richiede.</p></div>
-      <div class="card"><div class="ic">🎧</div><h3>Accesso notifiche</h3><p>(Solo Android, facoltativo) Per leggere il titolo del brano in riproduzione e mostrarti i controlli. Non leggiamo o trasmettiamo il contenuto delle tue notifiche.</p></div>
-      <div class="card"><div class="ic">📸</div><h3>Fotocamera &amp; Media</h3><p>Usati unicamente in locale per registrare un video (con audio) o scegliere una foto di sfondo per creare un highlight social ("Storia"). I file non vengono trasmessi a noi.</p></div>
-      <div class="card"><div class="ic">📡</div><h3>Rete locale</h3><p>(Solo iOS) Per collegarsi agli adattatori OBD-II Wi-Fi sulla rete locale.</p></div>
-      <div class="card"><div class="ic">🔋</div><h3>Schermo attivo</h3><p>Wakelock per impedire lo spegnimento dello schermo durante la guida nella HUD o nei Tour.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📍</div><h3>Posizione GPS</h3><p>Usata solo mentre l'app è in uso per cronometrare i giri, registrare la traiettoria e mostrare la mappa. Non viene usata quando l'app è chiusa o non in uso, è elaborata sul dispositivo e non viene trasmessa a noi.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📶</div><h3>Bluetooth</h3><p>Per collegarsi all'adattatore OBD-II (ELM327) via Bluetooth o BLE e leggere la telemetria.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🌐</div><h3>Internet</h3><p>Per mostrare Google Maps su Android o Apple Maps su iOS, verificare gli acquisti con lo store e aprire link scelti dall'utente. Razorline non invia sessioni o telemetria a server propri.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📳</div><h3>Sensori movimento</h3><p>Per misurare e mostrare le forze G in tempo reale. I dati restano sul dispositivo.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🔔</div><h3>Notifiche</h3><p>Per gli avvisi facoltativi dell'app quando una funzione visibile li richiede.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🎧</div><h3>Accesso notifiche</h3><p>(Solo Android, facoltativo) Per leggere il titolo del brano in riproduzione e mostrarti i controlli. Non leggiamo o trasmettiamo il contenuto delle tue notifiche.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📸</div><h3>Fotocamera &amp; Media</h3><p>Usati unicamente in locale per registrare un video (con audio) o scegliere una foto di sfondo per creare un highlight social ("Storia"). I file non vengono trasmessi a noi.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📡</div><h3>Rete locale</h3><p>(Solo iOS) Per collegarsi agli adattatori OBD-II Wi-Fi sulla rete locale.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🔋</div><h3>Schermo attivo</h3><p>Wakelock per impedire lo spegnimento dello schermo durante la guida nella HUD o nei Tour.</p></div>
     </div>
   </div>
 
@@ -122,7 +150,7 @@
   <p>Per domande sulla privacy: <a href="mailto:support.razorline@gmail.com">support.razorline@gmail.com</a></p>
 </main>
 
-<footer>
+<footer role="contentinfo">
   <div class="wrap">
     © 2026 Federico Gusmeroli · Razorline<br/>
     <a href="index.html">Home</a> · <a href="mailto:support.razorline@gmail.com">support.razorline@gmail.com</a>
