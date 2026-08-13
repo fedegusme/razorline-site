@@ -12,6 +12,20 @@
 <style>
   :root{
     --bg:#05070f; --bg2:#0d182c; --panel:#0e1726;
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Razorline — GPS Lap Timer & Telemetria OBD</title>
+<meta name="description" content="Razorline: cronometraggio giri stile F1, telemetria OBD-II e mappe in un'unica HUD. Spingiti al limite." />
+<link rel="icon" href="icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#05070f; --bg2:#0d182c; --panel:#0e1726;
     --accent:#1c5dff; --accent2:#6b9aff; --red:#ff3658;
     --silver:#e6eef7; --text:#f2f7fc; --muted:#9fb0c5;
     --line:rgba(230,238,247,.08);
@@ -22,6 +36,11 @@
     font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
     color:var(--text); background:var(--bg); line-height:1.6;
     -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  :focus-visible{
+    outline:2px solid var(--accent2);
+    outline-offset:2px;
+    border-radius:4px;
   }
   /* sfondo: gradiente + griglia in sbieco + bagliore blu */
   body::before{
@@ -151,15 +170,15 @@
 
 <nav>
   <div class="wrap">
-    <a class="brand" href="#top"><img src="icon.png" alt="Razorline" /><b>RAZORLINE</b></a>
-    <div class="nav-links">
+    <a class="brand" href="#top" aria-label="Torna in cima"><img src="icon.png" alt="Logo Razorline" /><b>RAZORLINE</b></a>
+    <div class="nav-links" aria-label="Menu principale">
       <a class="link" href="#features">Funzioni</a>
       <a class="link" href="#modes">Avvio</a>
       <a class="link" href="#premium">Premium</a>
       <a class="link" href="privacy.html#permissions">Permessi</a>
       <a class="link" href="#privacy">Privacy</a>
-      <a class="link" href="index.html" style="margin-left:32px; color:var(--text); border-bottom:2px solid var(--accent2)">IT</a>
-      <a class="link" href="index_en.html" style="margin-left:12px">EN</a>
+      <a class="link" href="index.html" style="margin-left:32px; color:var(--text); border-bottom:2px solid var(--accent2)" aria-label="Italiano">IT</a>
+      <a class="link" href="index_en.html" style="margin-left:12px" aria-label="Inglese">EN</a>
     </div>
   </div>
 </nav>
@@ -171,10 +190,19 @@
       <h1>Spingiti al <span class="stroke">limite</span>.</h1>
       <p class="lead">Cronometraggio giri in stile Formula 1, telemetria OBD-II e mappe — tutto in un'unica HUD pensata per la pista. Ogni decimo conta.</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#features">Scopri le funzioni →</a>
-        <a class="btn btn-ghost" href="#privacy">Privacy</a>
+        <a class="btn btn-primary" href="#features" aria-label="Scopri le funzioni">Scopri le funzioni →</a>
+        <a class="btn btn-ghost" href="#privacy" aria-label="Informazioni sulla privacy">Privacy</a>
       </div>
-      <div class="soon">In arrivo su iOS &amp; Android</div>
+      <div class="downloads" style="display:flex; gap:14px; margin-top:24px; flex-wrap:wrap">
+        <a href="https://apps.apple.com/ch/app/razorline-cronometro-gps-obd/id6785917563?l=it" class="btn btn-ghost" aria-label="Scarica dall'App Store" style="padding:10px 16px; border-color:var(--line); gap:12px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="img"><title>Apple Logo</title><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.54-1.55 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          <div style="text-align:left; line-height:1.2"><div style="font-size:10px; color:var(--muted)">Scarica su</div><div style="font-size:15px; font-weight:700; font-family:'Rajdhani',sans-serif">App Store</div></div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.razorline.gps" class="btn btn-ghost" aria-label="Disponibile su Google Play" style="padding:10px 16px; border-color:var(--line); gap:12px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="img"><title>Google Play Logo</title><path d="M17.82 13.91c-1.39.81-2.9 1.67-4.22 2.45l-4.57-4.57 4.55-4.55c1.33.78 2.85 1.65 4.24 2.47a1.64 1.64 0 0 1 0 2.82M4.99 4.39C4.41 4.75 4 5.48 4 6.38v11.23c0 .9.41 1.63.99 1.99l7.08-7.08-7.08-8.13zm13.78 6.7c1.39.81 1.39 2.14 0 2.96l-1.07.62-1.92-1.92 1.93-1.93 1.06.62M6.16 2.5c.34-.2.83-.22 1.35.08l4.9 2.86-5.11 5.11-1.14-8.05zM6.16 21.5c.34.2.83.22 1.35-.08l4.9-2.86-5.11-5.11-1.14 8.05z"/></svg>
+          <div style="text-align:left; line-height:1.2"><div style="font-size:10px; color:var(--muted)">Disponibile su</div><div style="font-size:15px; font-weight:700; font-family:'Rajdhani',sans-serif">Google Play</div></div>
+        </a>
+      </div>
     </div>
 
     <div class="phone">
@@ -251,18 +279,18 @@
       <p>Un'app sola per cronometrare, leggere il motore e seguire la traiettoria.</p>
     </div>
     <div class="grid">
-      <div class="card"><div class="ic">⏱️</div><h3>Cronometraggio stile F1</h3><p>Settori <span class="accent">viola</span>/verde/giallo con benchmark storico+fantasma, giro teorico e delta live. Traguardo e split sulla mappa.</p></div>
-      <div class="card"><div class="ic">📡</div><h3>Telemetria OBD-II</h3><p>Collega un adattatore ELM327 via Wi-Fi, Bluetooth classico o BLE. RPM, velocità, gas, temperature, codici errore (DTC).</p></div>
-      <div class="card"><div class="ic">🗺️</div><h3>Mappe native &amp; percorsi</h3><p>Google Maps su Android e Apple Maps su iOS, negli stili standard, satellite e terreno/ibrido. Disegna percorsi, registra un Tour o importa GPX e link Google Maps.</p></div>
-      <div class="card"><div class="ic">📊</div><h3>HUD personalizzabile</h3><p>Cruscotto a griglia configurabile: velocità, giri, tempi, temperature, forze G, minimappa. Fusione celle adiacenti.</p></div>
-      <div class="card"><div class="ic">🏁</div><h3>Dashboard live</h3><p>Giro, delta, settori F1, percorso sulla mappa, minimappa rotante, indicatore curve rally e forze G — tutto a colpo d'occhio.</p></div>
-      <div class="card"><div class="ic">🌀</div><h3>Forze G</h3><p>Accelerazioni laterali e longitudinali in tempo reale dai sensori del telefono, visibili in HUD.</p></div>
-      <div class="card"><div class="ic">🚨</div><h3>Autovelox personali</h3><p>Piazza i tuoi target sulla mappa. Monitoraggio GPS sempre attivo e record separati per auto.</p></div>
-      <div class="card"><div class="ic">🏎️</div><h3>Veicoli e confronto</h3><p>Catalogo marche e modelli integrato. Confronta i migliori tempi e settori tra le tue auto sullo stesso tracciato.</p></div>
-      <div class="card"><div class="ic">🎵</div><h3>Controllo musica Android</h3><p>Su Android controlla play, pausa e cambio traccia della sessione multimediale attiva, inclusi Spotify e YouTube Music, senza SDK o login dedicati. Non disponibile su iOS.</p></div>
-      <div class="card"><div class="ic">📸</div><h3>Highlight social</h3><p>Crea storie verticali con le tue foto o video, tempi di settore e colori F1 da condividere sui social.</p></div>
-      <div class="card"><div class="ic">📂</div><h3>Storico, replay e analisi</h3><p>Sessioni, giri e settori salvati; replay sincronizzato tra mappa e grafici, speed-trace e diagramma G-G. Export CSV, GPX, VBO e NMEA con Premium.</p></div>
-      <div class="card"><div class="ic">🔒</div><h3>Privacy per impostazione</h3><p>Nessun account Razorline, nessuna pubblicità e nessun tracciamento. Sessioni e telemetria restano sul telefono; mappe e acquisti usano i servizi di piattaforma descritti nell'informativa.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">⏱️</div><h3>Cronometraggio stile F1</h3><p>Settori <span class="accent">viola</span>/verde/giallo con benchmark storico+fantasma, giro teorico e delta live. Traguardo e split sulla mappa.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📡</div><h3>Telemetria OBD-II</h3><p>Collega un adattatore ELM327. Monitora RPM, gas, temperature, carburante e MAF. Priorità automatica velocità GPS/OBD.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🗺️</div><h3>Mappe native &amp; percorsi</h3><p>Mappe standard, satellite e ibride. Disegna percorsi a waypoint o a mano libera, registra Tour, importa GPX o link Google Maps.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📊</div><h3>HUD e Widget avanzati</h3><p>Fusione automatica celle adiacenti. Inserisci widget minimappa, mappa settori e curva rally, scegliendo stile F1, Rally o Minimal.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🏁</div><h3>Dashboard live</h3><p>Giro, delta, settori, percorso, minimappa rotante heading-up, indicatori curve rally e quadranti analogici o digitali.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">👻</div><h3>Fantasmi &amp; Sfide</h3><p>Batti il miglior tempo fantasma (pallino sulla minimappa). Il riferimento viola si adatta dinamicamente tra il tuo record e il fantasma.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🔧</div><h3>Diagnostica DTC</h3><p>Lettura codici errore (DTC) con descrizione diretta del guasto. Selezione PID mirata (es. tensione centralina, pressione olio).</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🚨</div><h3>Autovelox personali</h3><p>Piazza i tuoi target sulla mappa. Monitoraggio GPS sempre attivo in background e record separati per ogni veicolo.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🏎️</div><h3>Veicoli e confronto</h3><p>Catalogo offline integrato. Gestisci più auto, salva setup e confronta miglior giro e settori sullo stesso tracciato.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">🎵</div><h3>Controllo musica</h3><p>Controlla play/pausa e tracce di Spotify/YouTube Music (o altri) senza uscire dall'app. (Esclusiva Android).</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📸</div><h3>Highlight social</h3><p>Crea storie verticali con le tue foto/video e i tempi di settore colorati (viola/verde/giallo) pronti per i social network.</p></div>
+      <div class="card"><div class="ic" aria-hidden="true">📂</div><h3>Analisi &amp; Esportazione</h3><p>Replay sincronizzato su mappa, speed-trace e G-G. Export professionale in CSV, GPX, VBO e NMEA (Premium).</p></div>
     </div>
   </div>
 </section>
@@ -320,11 +348,11 @@
 
 <footer>
   <div class="wrap">
-    <a class="brand" href="#top"><img src="icon.png" alt="Razorline" /><b>RAZORLINE</b></a>
-    <div>
-      <a href="#features">Funzioni</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="mailto:support.razorline@gmail.com">Contatti</a>
+    <a class="brand" href="#top" aria-label="Torna in cima"><img src="icon.png" alt="Logo Razorline" /><b>RAZORLINE</b></a>
+    <div aria-label="Link utili">
+      <a class="link" href="#features">Funzioni</a>
+      <a class="link" href="privacy.html">Privacy</a>
+      <a class="link" href="mailto:support.razorline@gmail.com">Contatti</a>
     </div>
   </div>
   <div class="wrap copy" style="margin-top:18px">© 2026 Federico Gusmeroli · Razorline — GPS lap timer &amp; telemetria OBD.</div>
